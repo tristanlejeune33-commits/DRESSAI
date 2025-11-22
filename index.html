@@ -817,67 +817,83 @@
         </div>
     </div>
 
-    <!-- STEP 4: STYLE -->
+    <!-- STEP 4: STYLE & PSYCHOLOGIE -->
     <div id="step-4" class="step-container">
-        <h2 data-i18n="step4_title">3. Votre Identité Stylistique</h2>
-        <p class="subtitle" data-i18n="step4_subtitle">Quel univers vous correspond le mieux ? Sélectionnez une ou plusieurs influences.</p>
+        <h2 data-i18n="step4_title">3. Votre Identité & Psychologie</h2>
+        <p class="subtitle" data-i18n="step4_subtitle">Allons plus loin que le vêtement. Définissons votre aura et vos objectifs.</p>
 
+        <!-- 1. UNIVERS -->
+        <label class="input-label" data-i18n="label_style_universe">1. Votre Univers Mode</label>
         <div class="selection-grid" id="style-selection">
             <div class="selection-card" onclick="selectOption('style', this, 'minimalist')">
                 <h3 data-i18n="style_minimalist">✨ Minimaliste & Chic</h3>
                 <p>Less is more. Élégance discrète.</p>
-                <ul>
-                    <li>Coupes épurées et structurées</li>
-                    <li>Palette neutre (Beige, Gris, Noir)</li>
-                    <li>Matières nobles sans logos apparents</li>
-                </ul>
             </div>
             <div class="selection-card" onclick="selectOption('style', this, 'boheme')">
                 <h3 data-i18n="style_boho">🌿 Bohème & Romantique</h3>
                 <p>Douceur, fluidité et naturel.</p>
-                <ul>
-                    <li>Imprimés floraux ou ethniques</li>
-                    <li>Matières fluides (Lin, Coton, Soie)</li>
-                    <li>Accessoires artisanaux</li>
-                </ul>
             </div>
             <div class="selection-card" onclick="selectOption('style', this, 'streetwear')">
                 <h3 data-i18n="style_street">👟 Streetwear Couture</h3>
                 <p>Confort urbain avec une touche luxe.</p>
-                <ul>
-                    <li>Volumes oversize maîtrisés</li>
-                    <li>Sneakers et pièces iconiques</li>
-                    <li>Mélange sport et tailoring</li>
-                </ul>
             </div>
             <div class="selection-card" onclick="selectOption('style', this, 'classic')">
                 <h3 data-i18n="style_classic">👔 Classique & Business</h3>
                 <p>L'intemporel pour le monde pro.</p>
-                <ul>
-                    <li>Costumes et blazers bien coupés</li>
-                    <li>Chemises et pantalons à pinces</li>
-                    <li>Chaussures de ville en cuir</li>
-                </ul>
             </div>
             <div class="selection-card" onclick="selectOption('style', this, 'avantgarde')">
                 <h3 data-i18n="style_avantgarde">⚡ Avant-Garde</h3>
                 <p>Pour ceux qui osent la différence.</p>
-                <ul>
-                    <li>Asymétrie et déconstruction</li>
-                    <li>Volumes inattendus</li>
-                    <li>Pièces de créateurs pointus</li>
-                </ul>
+            </div>
+            <div class="selection-card" onclick="selectOption('style', this, 'glamour')">
+                <h3 data-i18n="style_glamour">🌹 Glamour & Sexy</h3>
+                <p>Féminité assumée et coupes près du corps.</p>
             </div>
         </div>
 
-        <div class="input-group">
-            <label class="input-label" data-i18n="label_keywords">Décrivez votre style idéal en 3 mots</label>
-            <input type="text" id="style-keywords" placeholder="Ex: Élégant, Confortable, Audacieux">
+        <!-- 2. PSYCHOLOGIE (VIBE) -->
+        <label class="input-label" style="margin-top: 30px;" data-i18n="label_vibe">2. Quelle énergie voulez-vous dégager ? (Psychologie)</label>
+        <div class="selection-grid" id="vibe-selection" style="grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));">
+            <div class="selection-card" onclick="selectOption('vibe', this, 'power')">
+                <h3 style="font-size: 1rem;">🦁 Power / Leadership</h3>
+                <p style="font-size: 0.8rem;">S'imposer, Convaincre</p>
+            </div>
+            <div class="selection-card" onclick="selectOption('vibe', this, 'radiant')">
+                <h3 style="font-size: 1rem;">✨ Solaire / Accessible</h3>
+                <p style="font-size: 0.8rem;">Inspirer, Accueillir</p>
+            </div>
+            <div class="selection-card" onclick="selectOption('vibe', this, 'mysterious')">
+                <h3 style="font-size: 1rem;">🌙 Mystère / Charme</h3>
+                <p style="font-size: 0.8rem;">Intriguer, Séduire</p>
+            </div>
+            <div class="selection-card" onclick="selectOption('vibe', this, 'creative')">
+                <h3 style="font-size: 1rem;">🎨 Créative / Audace</h3>
+                <p style="font-size: 0.8rem;">Surprendre, Exprimer</p>
+            </div>
         </div>
 
+        <!-- 3. INSPIRATIONS & OBJECTIFS -->
+        <div class="input-group" style="margin-top: 30px; display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+            <div>
+                <label class="input-label" data-i18n="label_icon">Une icône qui vous inspire ? (Culture)</label>
+                <input type="text" id="style-icon" placeholder="Ex: Zendaya, Victoria Beckham, Harry Styles...">
+            </div>
+            <div>
+                <label class="input-label" data-i18n="label_goal">Votre objectif principal ?</label>
+                <select id="style-goal">
+                    <option value="confidence">Gagner en confiance</option>
+                    <option value="professional">Faire plus professionnel(le)</option>
+                    <option value="seduction">Séduire / Attirer les regards</option>
+                    <option value="modern">Me moderniser / Changer de tête</option>
+                    <option value="comfort">Être à l'aise avant tout</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- 4. INTERDITS -->
         <div class="input-group">
-            <label class="input-label" data-i18n="label_brands">Marques que vous appréciez (Optionnel)</label>
-            <input type="text" id="brands" placeholder="Ex: Zara, Massimo Dutti, Jacquemus, Nike...">
+            <label class="input-label" data-i18n="label_forbidden">⛔ Les "NO-GO" (Ce que vous ne porterez JAMAIS)</label>
+            <input type="text" id="style-forbidden" placeholder="Ex: Talons > 8cm, Col roulé, Imprimé léopard, Matière synthétique...">
         </div>
 
         <div style="display: flex; justify-content: space-between; margin-top: 40px;">
@@ -1095,8 +1111,11 @@
             style_street: "👟 Streetwear Couture",
             style_classic: "👔 Classique & Business",
             style_avantgarde: "⚡ Avant-Garde",
-            label_keywords: "Décrivez votre style idéal en 3 mots",
-            label_brands: "Marques que vous appréciez (Optionnel)",
+            style_glamour: "🌹 Glamour & Sexy",
+            label_vibe: "2. Quelle énergie voulez-vous dégager ?",
+            label_icon: "Une icône qui vous inspire ?",
+            label_goal: "Votre objectif principal ?",
+            label_forbidden: "⛔ Les 'NO-GO' (Ce que vous ne porterez JAMAIS)",
 
             // Step 5 (Context)
             step5_title: "4. Le Contexte",
@@ -1454,8 +1473,12 @@
         const hidePart = document.getElementById('hide-part').value;
         const colorLove = document.getElementById('color-love').value;
         const colorHate = document.getElementById('color-hate').value;
-        const styleKeywords = document.getElementById('style-keywords').value;
-        const brands = document.getElementById('brands').value;
+        
+        // Nouveaux champs Psychologie & Objectifs
+        const vibe = state.vibe || "Non précisé";
+        const icon = document.getElementById('style-icon').value;
+        const goal = document.getElementById('style-goal').value;
+        const forbidden = document.getElementById('style-forbidden').value;
         
         // Contexte dynamique
         const contextQ1 = document.getElementById('context-q1') ? document.getElementById('context-q1').value : "";
@@ -1497,10 +1520,12 @@
             - À mettre en valeur : ${highlightPart || "Rien de spécifique"}
             - À camoufler : ${hidePart || "Rien de spécifique"}
 
-            GOÛTS :
+            GOÛTS & PSYCHOLOGIE :
             - Style global : ${style}
-            - Mots-clés du style : ${styleKeywords || "Non précisé"}
-            - Marques appréciées : ${brands || "Aucune préférence spécifique"}
+            - Énergie / Vibe : ${vibe}
+            - Icône / Inspiration : ${icon || "Aucune"}
+            - Objectif du relooking : ${goal}
+            - INTERDITS (Ce que je ne porte JAMAIS) : ${forbidden || "Aucun"}
             - Couleurs adorées : ${colorLove || "Aucune"}
             - Couleurs détestées : ${colorHate || "Aucune"}
 
@@ -1525,8 +1550,9 @@
             2. BUDGET :
                - Respecte scrupuleusement la consigne budget : ${budgetPrompt}
 
-            3. COULEURS INTERDITES :
-               - Tu ne dois JAMAIS proposer de vêtements de couleur : ${colorHate || "Aucune"}. C'est un critère éliminatoire absolu. Si l'utilisateur déteste le marron, ne mets PAS de beige foncé ou de camel.
+            3. INTERDITS ABSOLUS :
+               - COULEURS : Tu ne dois JAMAIS proposer de vêtements de couleur : ${colorHate || "Aucune"}.
+               - ITEMS/MATIÈRES : Tu ne dois JAMAIS proposer : ${forbidden || "Aucun"}. Si l'utilisateur dit "Pas de talons", tu mets des chaussures plates. C'est éliminatoire.
             
             4. ${langPrompt}
 
