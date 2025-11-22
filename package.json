@@ -1,0 +1,13 @@
+{
+  "name": "skinai-proto",
+  "version": "1.0.0",
+  "description": "Prototype SkinAI",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "openai": "^4.28.0"
+  }
+}
