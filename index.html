@@ -948,6 +948,12 @@
             <!-- Injected via JS -->
         </div>
 
+        <!-- EVENT DETAILS (New) -->
+        <div class="input-group">
+            <label class="input-label" data-i18n="label_event_details">Précisions sur l'événement (Optionnel)</label>
+            <textarea id="event-details" rows="2" placeholder="Ex: C'est un mariage champêtre, je serai témoin. Il fera chaud..." style="width: 100%; padding: 16px; border: 2px solid var(--border); border-radius: var(--radius-md); font-family: inherit; resize: vertical;"></textarea>
+        </div>
+
         <div class="input-group">
             <label class="input-label" data-i18n="label_budget">Budget Global Estimé</label>
             <select id="budget">
@@ -1133,6 +1139,7 @@
             occ_date: "🥂 Date / Soirée",
             occ_casual: "☕ Week-end / Détente",
             occ_event: "🎉 Mariage / Gala",
+            label_event_details: "Précisions sur l'événement (Optionnel)",
             label_budget: "Budget Global Estimé",
             opt_accessories: "Option : Ajouter accessoires",
             btn_generate: "Découvrir mes tenues ✨",
@@ -1491,6 +1498,7 @@
         // Contexte dynamique
         const contextQ1 = document.getElementById('context-q1') ? document.getElementById('context-q1').value : "";
         const contextQ2 = document.getElementById('context-q2') ? document.getElementById('context-q2').value : "";
+        const eventDetails = document.getElementById('event-details').value;
 
         // Localisation & Date
         const location = document.getElementById('location').value || "Paris, France";
@@ -1543,6 +1551,7 @@
             - Date de l'événement : ${targetDate}
             - Détail 1 : ${contextQ1}
             - Détail 2 : ${contextQ2}
+            - PRÉCISIONS ÉVÉNEMENT : ${eventDetails || "Aucune"}
             - Budget total : ${budget}
             - Consigne Budget : ${budgetPrompt}
             
