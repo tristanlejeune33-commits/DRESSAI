@@ -896,6 +896,12 @@
             <input type="text" id="style-forbidden" placeholder="Ex: Talons > 8cm, Col roulé, Imprimé léopard, Matière synthétique...">
         </div>
 
+        <!-- 5. BIO & HOBBIES (New) -->
+        <div class="input-group">
+            <label class="input-label" data-i18n="label_bio">5. Qui êtes-vous ? (Passions, Hobbies, Lifestyle)</label>
+            <textarea id="style-bio" rows="3" placeholder="Ex: Je suis architecte, j'adore l'art moderne et les voyages. Je fais du tennis le week-end. J'aime les choses simples mais de qualité..." style="width: 100%; padding: 16px; border: 2px solid var(--border); border-radius: var(--radius-md); font-family: inherit; resize: vertical;"></textarea>
+        </div>
+
         <div style="display: flex; justify-content: space-between; margin-top: 40px;">
             <button class="btn btn-outline" onclick="goToStep(3)" data-i18n="btn_back">Retour</button>
             <button class="btn btn-primary" onclick="goToStep(5)" data-i18n="btn_continue">Continuer</button>
@@ -1116,6 +1122,7 @@
             label_icon: "Une icône qui vous inspire ?",
             label_goal: "Votre objectif principal ?",
             label_forbidden: "⛔ Les 'NO-GO' (Ce que vous ne porterez JAMAIS)",
+            label_bio: "5. Qui êtes-vous ? (Passions, Hobbies, Lifestyle)",
 
             // Step 5 (Context)
             step5_title: "4. Le Contexte",
@@ -1479,6 +1486,7 @@
         const icon = document.getElementById('style-icon').value;
         const goal = document.getElementById('style-goal').value;
         const forbidden = document.getElementById('style-forbidden').value;
+        const bio = document.getElementById('style-bio').value;
         
         // Contexte dynamique
         const contextQ1 = document.getElementById('context-q1') ? document.getElementById('context-q1').value : "";
@@ -1525,6 +1533,7 @@
             - Énergie / Vibe : ${vibe}
             - Icône / Inspiration : ${icon || "Aucune"}
             - Objectif du relooking : ${goal}
+            - BIO / HOBBIES / LIFESTYLE : ${bio || "Non précisé"}
             - INTERDITS (Ce que je ne porte JAMAIS) : ${forbidden || "Aucun"}
             - Couleurs adorées : ${colorLove || "Aucune"}
             - Couleurs détestées : ${colorHate || "Aucune"}
@@ -1539,6 +1548,10 @@
             
             ${accessoriesPrompt}
             
+            TACHE 1 : ANALYSE & PORTRAIT (Persona)
+            Avant de créer les tenues, rédige un court paragraphe "persona_summary" qui analyse qui est cette personne d'après sa bio, ses hobbies et son style. Explique pourquoi ce style lui correspond. Sois perspicace, comme un vrai styliste personnel.
+
+            TACHE 2 : GÉNÉRATION DE TENUES
             Génère 3 TENUES DIFFÉRENTES (Options variées mais adaptées).
             IMPORTANT - RÈGLES STRICTES : 
             1. MÉTÉO & LOCALISATION (${location}) :
@@ -1565,6 +1578,7 @@
             
             Réponds UNIQUEMENT avec ce JSON :
             {
+                "persona_summary": "Ton analyse du profil ici...",
                 "outfits": [
                     {
                         "style_name": "Nom du style (ex: Business Chic)",
@@ -1596,6 +1610,9 @@
 
             const resultData = await gptResponse.json();
             if(resultData.error) throw new Error(resultData.error);
+
+            // Sauvegarde du résumé Persona
+            state.personaSummary = resultData.persona_summary || "Analyse non disponible.";
 
             // 3. Recherche des VRAIS produits via Serper.dev (via Backend)
             document.getElementById('loading-text').innerText = "Recherche des meilleurs prix pour les 3 tenues...";
@@ -1797,8 +1814,31 @@
         document.getElementById('res-morpho').innerText = state.shape ? state.shape.charAt(0).toUpperCase() + state.shape.slice(1) : "Non défini";
         document.getElementById('res-style').innerText = state.style ? state.style.charAt(0).toUpperCase() + state.style.slice(1) : "Non défini";
         
-        // Afficher la description du look
+        // Afficher le résumé Persona (Bio Analysis)
         const descContainer = document.querySelector('.persona-details');
+        
+        // Nettoyage ancien résumé si existe
+        const oldSummary = document.getElementById('persona-summary-text');
+        if(oldSummary) oldSummary.remove();
+
+        // Injection du nouveau résumé
+        if(state.personaSummary) {
+            const summaryDiv = document.createElement('div');
+            summaryDiv.id = 'persona-summary-text';
+            summaryDiv.style.background = '#f0f9ff';
+            summaryDiv.style.borderLeft = '4px solid var(--accent)';
+            summaryDiv.style.padding = '15px';
+            summaryDiv.style.marginBottom = '20px';
+            summaryDiv.style.borderRadius = '4px';
+            summaryDiv.style.fontSize = '0.95rem';
+            summaryDiv.style.color = 'var(--primary)';
+            summaryDiv.innerHTML = `<strong>🎯 Analyse Styliste :</strong><br>${state.personaSummary}`;
+            
+            // Insérer au début de la carte
+            descContainer.insertBefore(summaryDiv, descContainer.firstChild);
+        }
+
+        // Afficher la description du look
         if(!document.getElementById('look-desc')) {
             const p = document.createElement('p');
             p.id = 'look-desc';
