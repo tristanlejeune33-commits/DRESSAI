@@ -1,14 +1,14 @@
 @echo off
 echo Initialisation de Git...
-git init
-git add .
-git commit -m "Premier commit : Application DressAi complète"
-git branch -M main
-git remote add origin https://github.com/tristanlejeune33-commits/DRESSAI.git
-git remote set-url origin https://github.com/tristanlejeune33-commits/DRESSAI.git
+"C:\Program Files\Git\bin\git.exe" init
+"C:\Program Files\Git\bin\git.exe" add .
+"C:\Program Files\Git\bin\git.exe" commit -m "Mise a jour Application DressAi"
+"C:\Program Files\Git\bin\git.exe" branch -M main
+"C:\Program Files\Git\bin\git.exe" remote add origin https://github.com/tristanlejeune33-commits/DRESSAI.git
+"C:\Program Files\Git\bin\git.exe" remote set-url origin https://github.com/tristanlejeune33-commits/DRESSAI.git
 echo.
 echo Envoi vers GitHub...
-git push -u origin main
+"C:\Program Files\Git\bin\git.exe" push -u origin main
 echo.
-echo Termine ! Si des erreurs apparaissent ci-dessus, verifiez que Git est bien installe.
+echo Termine !
 pause
