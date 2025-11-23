@@ -1,4 +1,8 @@
-import { GoogleGenerativeAI } from '@google/generative-ai';
+import OpenAI from 'openai';
+
+const openai = new OpenAI({
+  apiKey: process.env.OPENAI_API_KEY,
+});
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
@@ -6,43 +10,48 @@ export default async function handler(req, res) {
   }
 
   try {
-    const { image } = req.body; // Base64 image
+    const { image } = req.body;
 
     if (!image) {
       return res.status(400).json({ error: 'Image is required' });
     }
 
-    const apiKey = process.env.GOOGLE_API_KEY;
-    if (!apiKey) {
-        throw new Error("GOOGLE_API_KEY is missing");
-    }
+    const response = await openai.chat.completions.create({
+      model: "gpt-4o",
+      response_format: { type: "json_object" },
+      messages: [
+        {
+          role: "system",
+          content: "Tu es un assistant styliste expert. Ta tâche est d'analyser visuellement une image pour aider à choisir des vêtements. Tu dois répondre UNIQUEMENT au format JSON."
+        },
+        {
+          role: "user",
+          content: [
+            { 
+              type: "text", 
+              text: "Analyse cette silhouette pour un conseil vestimentaire. Retourne un objet JSON avec ces clés exactes :\n" +
+                    "- shape (une valeur parmi: 'sablier', 'poire', 'triangle-inverse', 'rectangle', 'ovale')\n" +
+                    "- skin (une valeur parmi: 'clair', 'medium', 'mat', 'fonce')\n" +
+                    "- eyes (une valeur parmi: 'Bleu', 'Vert', 'Noisette', 'Marron', 'Noir', 'Gris')\n" +
+                    "- hair (une valeur parmi: 'Blond (Clair/Foncé)', 'Châtain', 'Brun / Noir', 'Roux / Auburn', 'Gris / Blanc', 'Coloré (Vif)')\n"
+            },
+            {
+              type: "image_url",
+              image_url: {
+                url: image
+              }
+            }
+          ]
+        }
+      ],
+      max_tokens: 300
+    });
 
-    const genAI = new GoogleGenerativeAI(apiKey);
-    // Utilisation de Gemini 1.5 Pro (Le modèle le plus puissant disponible)
-    const model = genAI.getGenerativeModel({ model: "gemini-1.5-pro" });
-
-    // Préparation de l'image
-    const base64Data = image.split(',')[1];
-    const mimeType = image.split(';')[0].split(':')[1];
-
-    const prompt = `Analyse cette silhouette pour un conseil vestimentaire. Retourne un objet JSON avec ces clés exactes :
-    - shape (une valeur parmi: 'sablier', 'poire', 'triangle-inverse', 'rectangle', 'ovale')
-    - skin (une valeur parmi: 'clair', 'medium', 'mat', 'fonce')
-    - eyes (une valeur parmi: 'Bleu', 'Vert', 'Noisette', 'Marron', 'Noir', 'Gris')
-    - hair (une valeur parmi: 'Blond (Clair/Foncé)', 'Châtain', 'Brun / Noir', 'Roux / Auburn', 'Gris / Blanc', 'Coloré (Vif)')
-    
-    Réponds UNIQUEMENT avec le JSON, sans markdown.`;
-
-    const result = await model.generateContent([
-        prompt,
-        { inlineData: { data: base64Data, mimeType: mimeType } }
-    ]);
-
-    const content = result.response.text();
+    const content = response.choices[0].message.content;
     const jsonStr = content.replace(/```json/g, '').replace(/```/g, '').trim();
-    const parsedResult = JSON.parse(jsonStr);
+    const result = JSON.parse(jsonStr);
 
-    res.status(200).json(parsedResult);
+    res.status(200).json(result);
   } catch (error) {
     console.error('Error:', error);
     res.status(500).json({ error: error.message });
