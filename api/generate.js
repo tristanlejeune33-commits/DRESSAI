@@ -23,8 +23,8 @@ export default async function handler(req, res) {
     if (userImage || (outfitImages && outfitImages.length > 0)) {
         try {
             const genAI = new GoogleGenerativeAI(apiKey);
-            // Utilisation du modèle demandé par l'utilisateur
-            const model = genAI.getGenerativeModel({ model: "gemini-3-pro-preview", apiVersion: "v1beta" });
+            // Utilisation de Gemini 1.5 Pro (Le modèle le plus puissant disponible)
+            const model = genAI.getGenerativeModel({ model: "gemini-1.5-pro" });
 
             const parts = [];
             
