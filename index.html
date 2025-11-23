@@ -1339,7 +1339,8 @@
         style: '',
         occasion: '',
         generatedOutfits: [], 
-        currentOutfitIndex: 0
+        currentOutfitIndex: 0,
+        userPhoto: null
     };
 
     function changeLanguage(lang) {
@@ -2004,6 +2005,7 @@
             const reader = new FileReader();
             reader.onload = async function(e) {
                 const base64Image = e.target.result;
+                state.userPhoto = base64Image;
 
                 // Afficher la prévisualisation
                 const preview = document.getElementById('photo-preview');
@@ -2181,7 +2183,9 @@
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    prompt: prompt
+                    prompt: prompt,
+                    userImage: state.userPhoto,
+                    outfitImages: state.currentLook.map(i => i.img)
                 })
             });
 
