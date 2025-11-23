@@ -19,11 +19,12 @@ export default async function handler(req, res) {
 
     let finalPrompt = prompt;
 
-    // Si on a des images (User ou Outfit), on utilise Gemini 1.5 Pro pour créer un prompt visuel parfait
+    // Si on a des images (User ou Outfit), on utilise Gemini pour créer un prompt visuel parfait
     if (userImage || (outfitImages && outfitImages.length > 0)) {
         try {
             const genAI = new GoogleGenerativeAI(apiKey);
-            const model = genAI.getGenerativeModel({ model: "gemini-1.5-pro" });
+            // Utilisation du modèle demandé par l'utilisateur
+            const model = genAI.getGenerativeModel({ model: "gemini-3-pro-preview", apiVersion: "v1beta" });
 
             const parts = [];
             

@@ -18,8 +18,8 @@ export default async function handler(req, res) {
     }
 
     const genAI = new GoogleGenerativeAI(apiKey);
-    // Utilisation de Gemini 1.5 Pro (Vision)
-    const model = genAI.getGenerativeModel({ model: "gemini-1.5-pro" });
+    // Utilisation du modèle demandé par l'utilisateur
+    const model = genAI.getGenerativeModel({ model: "gemini-3-pro-preview", apiVersion: "v1beta" });
 
     // Préparation de l'image
     const base64Data = image.split(',')[1];
