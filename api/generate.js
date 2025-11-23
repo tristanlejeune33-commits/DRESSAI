@@ -99,11 +99,13 @@ export default async function handler(req, res) {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        prompt: {
-          text: finalPrompt
-        },
-        sampleCount: 1,
-        aspectRatio: "1:1"
+        instances: [
+          { prompt: finalPrompt }
+        ],
+        parameters: {
+          sampleCount: 1,
+          aspectRatio: "1:1"
+        }
       })
     });
 
